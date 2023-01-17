@@ -19,14 +19,33 @@ const arr = [
   {id: 6, parentId: 4},
   {id: 7, parentId: 5}
 ];
-console.log(buildStructure(arr, 0));
 
-function buildStructure(arr, parent){
-  const result = arr.filter(item => item.parentId === parent);
-  return result.map(item=>{
-    const children = buildStructure(arr, item.id);
-    return children.length? {...item, children} : {...item};
-  });
+console.log(buildStructure(arr));
+
+function buildStructure(arr) {
+  let arrMap = new Map(arr.map(item => [item.id, item]));
+  let result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    let item = arr[i];
+
+    if (item.parentId) {
+      let parentItem = arrMap.get(item.parentId);
+
+      if (parentItem) {
+        let { children } = parentItem;
+
+        if (children) {
+          parentItem.children.push(item);
+        } else {
+          parentItem.children = [item];
+        }
+      }
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
 }
 
 1.3
