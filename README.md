@@ -9,6 +9,7 @@
 -select * from Table_A a inner join Table_B b on a.ID=b.Id_A - Вернет все записи из первой и второй таблицы где соединение таблицы совпадает a.ID=b.Id_A
 -select * from Table_A a left join Table_B b on a.ID=b.Id_A - Верент все записи из первой таблицы и если есть данные в второй (Table_B) таблицы то вернет по условию соединения и из второй
 
+1.2
 const arr = [
   {id: 1, parentId: 0},
   {id: 2, parentId: 0},
@@ -22,16 +23,16 @@ const arr = [
 console.log(buildStructure(arr));
 
 function buildStructure(arr) {
-  let arrMap = new Map(arr.map(item => [item.id, item]));
+  const arrMap = new Map(arr.map(item => [item.id, item]));
   let result = [];
 
   for (let i = 0; i < arr.length; i++) {
-    let item = arr[i];
+    const item = arr[i];
 
     if (item.parentId) {
-      let parentItem = arrMap.get(item.parentId);
+      const parentItem = arrMap.get(item.parentId);
       if (parentItem) {
-        let { children } = parentItem;
+        const { children } = parentItem;
         if (children) {
           parentItem.children.push(item);
         } else {
